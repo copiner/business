@@ -12,8 +12,8 @@ function resolveBuild(dir) {
 module.exports = {
   dev: {
     static: './static/**/*',
-    html:  resolveDev('/**/*.html'),
-    allhtml: resolveDev('/**/*.html'),
+    html:  resolveDev('/**/*.ejs'),
+    allhtml: resolveDev('/**/*.ejs'),
     styles: resolveDev('static/styles/*.css'),
     script: resolveDev('static/js/**/*.js'),
     images: resolveDev('static/images/**/*.{png,jpg,gif,svg}'),

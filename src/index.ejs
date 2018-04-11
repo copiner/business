@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/css/main.css">
+	<script src="/static/js/jquery.min.js"></script>
+	<script src="/static/js/ejs.min.js"></script>
+	<title>HandleBars</title>
+</head>
+<body>
+<div id="appheader" class="appheader">
+	 <%- include('./views/administrator/index'); %>
+</div>
+<div id="applefter" class="applefter">
+	<%- include('./views/customer/index'); %>
+</div>
+<div id="appcontent" class="appcontent"></div>
+<script src="/static/js/main.js"></script>
+</body>
+</html>

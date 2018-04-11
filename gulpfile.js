@@ -1,4 +1,3 @@
-
 const config = require('./config')
 
 const path = require('path')
@@ -6,6 +5,7 @@ const chalk = require('chalk')
 const gulp = require('gulp')
 const gulpif = require('gulp-if')
 const htmlmin = require('gulp-htmlmin')
+const ejs = require('gulp-ejs')
 const postcss = require('gulp-postcss')
 const cleanCSS = require('gulp-clean-css')
 const plumber = require('gulp-plumber')
@@ -68,6 +68,7 @@ function cbTask(task) {
 
 gulp.task('html', () => {
   return gulp.src(config.dev.html)
+    .pipe(ejs({ msg: 'Hello Gulp!'}, {}, { ext: '.html' }))
     .pipe(plumber(onError))
     .pipe(gulpif(condition, htmlmin({
       removeComments: true,
