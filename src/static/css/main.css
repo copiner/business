@@ -83,3 +83,8 @@ input:-webkit-autofill {
   height: 720px;
   float: left;
 }
+.appfooter{
+  width: 100%;
+  background-color: #ccc;
+  height: 160px;
+}
