@@ -21,7 +21,7 @@ const sequence = require('gulp-sequence')
 const zip = require('gulp-zip')
 const del = require('del')
 
-// server
+//server
 const browserSync = require('browser-sync').create()
 const reload = browserSync.reload
 
