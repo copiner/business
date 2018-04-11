@@ -1,42 +1,33 @@
+$(function(){
+  Handlebars.registerPartial('header', function () {
+      return new Handlebars.SafeString('<div>This is header</div>')
+  });
+  Handlebars.registerPartial('lefter', function () {
+      return new Handlebars.SafeString('<div>This is lefter</div>')
+  });
+	//Step 2: Define the data
+  var context = {
+    author: {firstName: "Alan", lastName: "Johnson"},
+    body: "I Love Handlebars",
+    comments: [{
+      author: {firstName: "Yehuda", lastName: "Katz"},
+      body: "Me too!"
+    }]
+  };
 
+  Handlebars.registerHelper('fullName', function(person) {
+    return person.firstName + " " + person.lastName;
+  });
 
-var Zepto = (function () {
-  var zepto = {}, $
+	//Step 3: Compile the <script> template with HandleBars -- returns func
+  var tpl =  $("#tpl").html();
+  var template = Handlebars.compile(tpl);
 
-  function Z(doms) {
-    var len = doms.length 
-    for (var i = 0; i < len; i++) {
-      this[i] = doms[i]
-    }
-    this.length = doms.length
-  }
+	//Step 4: Pass the data into the func -- returns the final HTML
+  var html = template(context);
 
-  zepto.Z = function(doms) {
-    return new Z(doms)
-  }
+	//Step 5: add the final HTML to desired tag
+	$("#body").html(html);
+	//$( ".container" ).append( $( "h2" ) );
 
-  zepto.init = function(doms) {
-    var doms = ['domObj1','domObj2','domObj3']
-    return zepto.Z(doms)
-  }
-
-  $ = function() {
-    return zepto.init()
-  }
-
-  $.fn = {
-    constructor: zepto.Z,
-    method: function() {
-      return this
-    }
-  }
-
-  zepto.Z.prototype = Z.prototype = $.fn
-
-  return $
-})()
-
-window.Zepto = Zepto
-window.$ === undefined && (window.$ = Zepto)
-
-console.log($().method());
+});

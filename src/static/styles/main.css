@@ -63,3 +63,23 @@ input[type="search"]{
 input:-webkit-autofill {
   -webkit-box-shadow: 000px 1000px whiteinset;
 }
+
+.appheader{
+  width: 100%;
+  background-color: #ccc;
+  height: 160px;
+}
+
+.applefter{
+  width: 20%;
+  background-color: #999;
+  height: 720px;
+  float: left;
+}
+
+.appcontent{
+  width: 80%;
+  background-color: #666;
+  height: 720px;
+  float: left;
+}
