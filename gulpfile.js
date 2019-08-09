@@ -5,15 +5,9 @@ var uglify = require('gulp-uglify');
 var htmlmin = require('gulp-htmlmin');
 var imagemin = require('gulp-imagemin');
 var gulpSequence = require('gulp-sequence');
-var runSequence = require('run-sequence');
 var del = require('del');
 var rev = require('gulp-rev-append');
-//var webserver = require('gulp-webserver');
-
-//反向代理
-var connect = require('gulp-connect');
-var proxy = require('http-proxy-middleware');
-
+var webserver = require('gulp-webserver');
 
 gulp.task('static', function () {
     return gulp.src('src/lib/*')
@@ -52,45 +46,14 @@ gulp.task('image-min', function () {
 });
 
 
-gulp.task('webserver', function() {
-    connect.server({
-        root: ['src'],
-        host:'localhost',
-        port: 3000,
-        livereload: true,
-        middleware: function(connect, opt) {
-            return [
-                proxy('/api',  {
-                    target: 'http://192.168.1.194:8080/sstsvr',
-                    changeOrigin:true,
-                    headers: {
-                         "Connection": "keep-alive"
-                     },
-                    //ws: true,
-                    pathRewrite: {
-                        '^/api' : ''
-                    },
-                    router: {
-                      // 'integration.localhost:3000' : 'http://localhost:8001',  // host only
-                      // 'staging.localhost:3000'     : 'http://localhost:8002',  // host only
-                      // 'localhost:3000/api'         : 'http://localhost:8003',  // host + path
-                      // '/rest'                      : 'http://localhost:8004'   // path only
-                    }
-                })
-            ]
-        }
-
-    });
+gulp.task('webserver', function(){
+  gulp.src('src').pipe(webserver({
+    livereload: true,//实时刷新代码
+    open: true,
+    host: "localhost",
+    port: "8080"
+  }))
 });
-
-// gulp.task('webserver', function(){
-//   gulp.src('src').pipe(webserver({
-//     livereload: true,//实时刷新代码
-//     open: true,
-//     host: "localhost",
-//     port: "8080"
-//   }))
-// });
 
 
 gulp.task('clean', () => {
@@ -102,13 +65,14 @@ gulp.task('clean', () => {
   });
 });
 
-gulp.task('watch', function () {//监控
+gulp.task('watch', done => {//监控
   gulp.watch('./src/**/*',function(){
     console.log(`
         -----------------------------
           server reload are successful
         -----------------------------`);
   });
+  done();
 });
 
 
@@ -123,22 +87,16 @@ gulp.task('build', function() {
 });
 
 //开发
-gulp.task('server',function(){
+gulp.task('server',done => {
   gulpSequence('webserver','watch', function(){
     console.log(`
         -----------------------------
           server tasks are successful
         -----------------------------`);
   });
+  done();
 });
 
-
-// gulp.task('server',['watch'],function(){
-//   console.log(`
-//       -----------------------------
-//         server tasks are successful
-//       -----------------------------`);
-// });
 
 gulp.task('default', () => {
   console.log(
@@ -149,3 +107,38 @@ gulp.task('default', () => {
     `
   )
 })
+
+//反向代理
+// var connect = require('gulp-connect');
+// var proxy = require('http-proxy-middleware');
+
+// gulp.task('webserver', function() {
+//     connect.server({
+//         root: ['src'],
+//         host:'localhost',
+//         port: 3000,
+//         livereload: true,
+//         middleware: function(connect, opt) {
+//             return [
+//                 proxy('/api',  {
+//                     target: 'http://192.168.1.194:8080/sstsvr',
+//                     changeOrigin:true,
+//                     headers: {
+//                          "Connection": "keep-alive"
+//                      },
+//                     //ws: true,
+//                     pathRewrite: {
+//                         '^/api' : ''
+//                     },
+//                     router: {
+//                       // 'integration.localhost:3000' : 'http://localhost:8001',  // host only
+//                       // 'staging.localhost:3000'     : 'http://localhost:8002',  // host only
+//                       // 'localhost:3000/api'         : 'http://localhost:8003',  // host + path
+//                       // '/rest'                      : 'http://localhost:8004'   // path only
+//                     }
+//                 })
+//             ]
+//         }
+//
+//     });
+// });
