@@ -6,7 +6,6 @@ var htmlmin = require('gulp-htmlmin');
 var imagemin = require('gulp-imagemin');
 var gulpSequence = require('gulp-sequence');
 var runSequence = require('run-sequence');
-var ejs = require("gulp-ejs")
 var del = require('del');
 var rev = require('gulp-rev-append');
 //var webserver = require('gulp-webserver');
@@ -41,7 +40,6 @@ gulp.task('Html-min', function () {
         minifyCSS: true//压缩页面CSS
     };
     return gulp.src('src/*.html')
-        .pipe(ejs({},{},{ext: '.html'}))
         .pipe(rev())//(?:href|src)="(.*)[\?]rev=(.*)[\"]   //版本号
         // .pipe(htmlmin(options))
         .pipe(gulp.dest('dist'));
@@ -94,25 +92,6 @@ gulp.task('webserver', function() {
 //   }))
 // });
 
-//生成环境
-// gulp.task('build', function() {
-//   gulpSequence('clean',['html', 'styles', 'common', 'script', 'images'],function(){
-//     console.log(`
-//         -----------------------------
-//           build tasks are successful
-//         -----------------------------`);
-//   });
-// });
-//
-// //开发
-// gulp.task('server',function(){
-//   gulpSequence(['html', 'styles', 'common', 'script', 'images'],'webserver', 'watch',function(){
-//     console.log(`
-//         -----------------------------
-//           server tasks are successful
-//         -----------------------------`);
-//   });
-// });
 
 gulp.task('clean', () => {
   return del('./dist').then(paths => {
@@ -132,30 +111,25 @@ gulp.task('watch', function () {//监控
   });
 });
 
-gulp.task('pro', () => {
-  console.log(`
-      -----------------------------
-        build tasks are successful
-      -----------------------------`);
-});
-
-gulp.task('dev', () => {
-  console.log(`
-      -----------------------------
-        server tasks are successful
-      -----------------------------`);
-});
 
 //生成环境
 gulp.task('build', function() {
-  runSequence('clean',
-              ['static', 'css-min','js-min','image-min'],
-              'Html-min','pro');
+  gulpSequence('clean',['static', 'css-min','js-min','image-min'],'Html-min',function(){
+                console.log(`
+                    -----------------------------
+                      build tasks are successful
+                    -----------------------------`);
+              });
 });
 
 //开发
 gulp.task('server',function(){
-  runSequence('webserver','watch','dev');
+  gulpSequence('webserver','watch', function(){
+    console.log(`
+        -----------------------------
+          server tasks are successful
+        -----------------------------`);
+  });
 });
 
 
