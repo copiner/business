@@ -10,37 +10,6 @@
 <body>
 
 <!-- content start-->
-<div>
-<p>移动端开发</p>
-</div>
-
-
-
-
-<div id="content"></div>
-<script id="test" type="text/html">
-<h1>{{title}}</h1>
-{{include 'list'}}
-</script>
-<script id="list" type="text/html">
-<ul>
-    {{each list value i}}
-        <li>索引 {{i + 1}} ：{{value}}</li>
-    {{/each}}
-</ul>
-</script>
-<script>
-var data = {
-	title: '嵌入子模板',
-	list: ['文艺', '博客', '电影', '民谣', '旅行', '吉他']
-};
-var html = template('test', data);
-document.getElementById('content').innerHTML = html;
-</script>
-
-
-
-
 
 
 

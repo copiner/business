@@ -1,12 +1,11 @@
-@@include('include/header.html')
-<!-- content start-->
-<div>
-<p>移动端开发</p>
-</div>
-
-
-
-
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>include-demo</title>
+<script src="./js/template-web.js"></script>
+</head>
+<body>
 <div id="content"></div>
 <script id="test" type="text/html">
 <h1>{{title}}</h1>
@@ -22,25 +21,10 @@
 <script>
 var data = {
 	title: '嵌入子模板',
-	list: ['文艺', '博客', '电影', '民谣', '旅行', '吉他']
+	list: ['文艺', '博客', '摄影', '电影', '民谣', '旅行', '吉他']
 };
 var html = template('test', data);
 document.getElementById('content').innerHTML = html;
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script src="./js/jquery.pop.js?rev=@@hash"></script>
-<script src="./js/index.js?rev=@@hash"></script>
-<!-- content end-->
-@@include('include/footer.html')
+</body>
+</html>

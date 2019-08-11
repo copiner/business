@@ -10,8 +10,10 @@ const connect = require('gulp-connect');
 //反向代理
 const proxy = require('http-proxy-middleware');
 
+const fileinclude = require('gulp-file-include');
 const rev = require('gulp-rev-append');
 const del = require('del');
+
 task('css_min', function (cb) {
     src('src/css/*.css')
     .pipe(cleanCSS())
@@ -29,15 +31,19 @@ task('js_min', function (cb) {
 });
 
 task('html_min', function (cb) {
-    var options = {
+    let options = {
         removeComments: true,//清除HTML注释
         collapseWhitespace: true,//压缩HTML
         minifyJS: true,//压缩页面JS
         minifyCSS: true//压缩页面CSS
     };
     src('src/*.html')
+    .pipe(fileinclude({
+        prefix: '@@',
+        basepath: '@file'
+      }))
     .pipe(rev())//(?:href|src)="(.*)[\?]rev=(.*)[\"]   //版本号
-    .pipe(htmlmin(options))
+    //.pipe(htmlmin(options))
     .pipe(dest('app'))
     .pipe(connect.reload());
     cb();
