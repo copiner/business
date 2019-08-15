@@ -1,5 +1,5 @@
 /**
- * Created by wdaonngg on 2019/08/09.
+ * Created by wdaonngg@gmail.com on 2019/08/09.
  * 首页
  */
 var Index = {

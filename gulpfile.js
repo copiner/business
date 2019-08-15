@@ -6,17 +6,32 @@ const cleanCSS = require('gulp-clean-css');
 const uglify = require('gulp-uglify');
 const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
+const gulpif = require('gulp-if');
+const sass = require('gulp-sass');
+const plumber = require('gulp-plumber');
 
 const connect = require('gulp-connect');
-//反向代理
-const proxy = require('http-proxy-middleware');
+const proxy = require('http-proxy-middleware');//反向代理
 
 const fileinclude = require('gulp-file-include');
 const rev = require('gulp-rev-append');
 const del = require('del');
 
+// NODE_ENV
+var env = process.env.NODE_ENV || 'development';
+var condition = env === 'production';
+
+
+task('lib', function (cb) {
+  src('src/lib/*')
+  .pipe(dest('app/lib'));
+  cb();
+})
+
 task('css_min', function (cb) {
-    src('src/css/*.css')
+    src('src/scss/*.scss')
+    .pipe(plumber())
+    .pipe(sass().on('error', sass.logError))
     .pipe(cleanCSS())
     .pipe(dest('app/css'))
     .pipe(connect.reload());
@@ -25,7 +40,8 @@ task('css_min', function (cb) {
 
 task('js_min', function (cb) {
     src('src/js/*.js')
-    .pipe(uglify())
+    .pipe(plumber())
+    .pipe(gulpif(condition, uglify()))
     .pipe(dest('app/js'))
     .pipe(connect.reload());
     cb();
@@ -39,6 +55,7 @@ task('html_min', function (cb) {
         minifyCSS: true//压缩页面CSS
     };
     src('src/*.html')
+    .pipe(plumber())
     .pipe(fileinclude({
         prefix: '@@',
         basepath: '@file'
@@ -51,26 +68,17 @@ task('html_min', function (cb) {
 });
 
 task('image_min', function (cb) {
-    src('src/img/*')
-    // .pipe(imagemin([
-    //   imagemin.gifsicle({interlaced: true}),
-    //   imagemin.jpegtran({progressive: true}),
-    //   imagemin.optipng({optimizationLevel: 5}),
-    //   imagemin.svgo({
-    //       plugins: [
-    //           {removeViewBox: true},
-    //           {cleanupIDs: false}
-    //       ]
-    //   })
-    // ]))
-    .pipe(dest('app/img'));
+    src('src/imgs/*')
+    .pipe(plumber())
+    .pipe(gulpif(condition, imagemin()))
+    .pipe(dest('app/imgs'));
     cb();
 });
 
 
 task('watch', function(cb){//监控
   watch('./src/js/*.js',parallel('js_min'));
-  watch('./src/css/*.css',parallel('css_min'));
+  watch('./src/scss/*.scss',parallel('css_min'));
   watch('./src/*.html',parallel('html_min'));
   cb();
 });
@@ -89,14 +97,13 @@ task('clean', () => {
 
 
 //生成环境
-task('build', series('clean', parallel('css_min','js_min','image_min','html_min'),function(cb){
+task('build', series('clean', parallel('lib','css_min','js_min','image_min','html_min'),function(cb){
   console.log(`
       -----------------------------
         build tasks are successful
       -----------------------------`);
       cb();
 }));
-
 
 task('server',series('build','watch',function(){
     connect.server({

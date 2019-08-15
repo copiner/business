@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+@import "./util";
+
+html,
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+img,
+span,
+p,
+blockquote,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+
+ul, li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    outline: none;
+}
+
+img {
+    vertical-align: middle;
+    border: 0;
+}
+
+input,button {
+    outline: none;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+html {
+    @include root-width();
+}
+
+body {
+    /* rem2px的使用方式，仅用于临时计算 */
+    border-width: rem2px(0.6);
+
+    font-size: px2rem(16);
+    font-family: "Microsoft YaHei";
+}

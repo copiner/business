@@ -1,101 +1,22 @@
 /**
- * Created by wds on 2018/10/29.
+ * Created by wdaonngg on 2018/10/29.
  * 公用js
  */
 var PaymentCode = {};
 var Common = {
     //服务器地址prod
-    ProjectPath : 'http://10.199.251.167/sstsvr',
-    ProjectStaticPath : 'http://10.199.251.167/sstsvr/',
-    ProjectName : '/machine',
+    ProjectPath : '',
+    ProjectName : '',
 
     //test
-    // ProjectPath : 'http://192.168.23.213:9001/sstsvr',
-    // ProjectStaticPath : 'http://192.168.23.213:9001/sstsvr/',
-    // ProjectName : '/machine',
+    // ProjectPath : '',
+    // ProjectName : '',
 
     //dev
     // ProjectPath : '/api',
-    // ProjectStaticPath : 'http://192.168.23.213:9001/sstsvr/',
     // ProjectName : '',
 
     SUC_CODE : '0000',
-
-    /**
-     * 获取当前年月日 时分秒 星期
-     * 格式如：2018年10月30日 10:07:40 星期二
-     * @returns {string}
-     */
-    current : function (){
-        var d=new Date(),curTime='';
-        var weekArray = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
-
-        curTime += d.getFullYear()+'年'; //获取当前年份
-        if(d.getMonth()<9){
-            curTime += '0';
-        }
-        curTime += d.getMonth()+1+'月'; //获取当前月份（0——11）
-        if(d.getDate()<10){
-            curTime += '0';
-        }
-        curTime += d.getDate()+'日 ';
-        if(d.getHours()<10){
-            curTime += '0';
-        }
-        curTime += d.getHours()+':';
-        if(d.getMinutes()<10){
-            curTime += '0';
-        }
-        curTime += d.getMinutes()+':';
-        if(d.getSeconds()<10){
-            curTime += '0';
-        }
-        curTime += d.getSeconds()+' ';
-        curTime +=weekArray[d.getDay()];
-
-        return curTime;
-    },
-
-    /**
-     * 动态显示当前时间 及 倒计时
-     * @param seconds
-     */
-    getCurDateAndTime : function (seconds) {
-        var timer = setInterval(function(){
-            $(".showCurTime").html(Common.current());
-            seconds--;
-            if(seconds==0){
-
-              if(PaymentCode.flag){
-                clearInterval(timer);
-                $.piupiu('支付超时！');
-                PaymentCode.closeOrder();
-                setTimeout(function(){
-                  window.location.href = Common.ProjectName+'/index.html?date='+new Date().getTime();
-                 }, 3000);
-              } else {
-                window.location.href = Common.ProjectName+'/index.html?date='+new Date().getTime();;
-              }
-
-            } else {
-                $(".countdown").text(seconds+'秒');
-            }
-        },1000);
-    },
-
-    /**
-     * 数据存储简化
-     * sessionStorage
-     */
-    seGeReItem : function(key,value){
-      if(value){
-        sessionStorage.setItem(key,value);
-      } else if(value == "") {
-        sessionStorage.removeItem(key);
-      } else {
-        return sessionStorage.getItem(key);
-      }
-    },
 
     /**
      * 获取url的参数值
@@ -109,25 +30,10 @@ var Common = {
       return null;
     },
 
-    /**
-     * 获取mac地址
-     */
-    getMacInfo : function (){
-        try{
-            var locator = new ActiveXObject ("WbemScripting.SWbemLocator");
-            var service = locator.ConnectServer(".");
-            var properties = service.ExecQuery("Select * from Win32_NetworkAdapterConfiguration Where IPEnabled =True");
-            var e = new Enumerator (properties);
-            var p = e.item();
-            return p.MACAddress;
-        } catch(e){
-            $.piupiu("获取MAC地址失败:"+e);
-        }
-    },
 
     /**
      * @author wds
-     * 获取30位uuid
+     * 获取18位uuid
      * @date 2018/05/10
      */
     getUuid : function() {
@@ -159,29 +65,14 @@ var Common = {
         }
         result += content.substring(start+length);
         return result;
-    },
-
-    init : function () {
-        //倒计时及当前时间显示
-        Common.getCurDateAndTime($(".countdown").attr('data-second'));
-
-        $('.backBtn').on('click',function () {
-            window.location.href = Common.ProjectName+'/index.html?date='+new Date().getTime();
-        });
     }
+
 }
 
-Common.init();
-
-/**
- * @author lwj
- * 重新封装ajax请求
- */
 $.extend({
     commonAjax: function (options){
         var url = options.url;
         if (!url) {
-            $.piupiu('请求地址为空！');
             return;
         }
         options.url = url + '?date='+new Date().getTime();
