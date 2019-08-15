@@ -5,8 +5,8 @@
 var PaymentCode = {};
 var Common = {
     //服务器地址prod
-    ProjectPath : 'http://10.101.251.167/sstsvr',
-    ProjectStaticPath : 'http://10.101.251.167/sstsvr/',
+    ProjectPath : 'http://10.199.251.167/sstsvr',
+    ProjectStaticPath : 'http://10.199.251.167/sstsvr/',
     ProjectName : '/machine',
 
     //test

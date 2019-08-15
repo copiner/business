@@ -1,3 +1,4 @@
+/* Written by wdaonngg@gmail.com in 2019-08-09*/
 
 const { src, dest, task, series, parallel, watch, lastRun } = require('gulp');
 
@@ -43,7 +44,7 @@ task('html_min', function (cb) {
         basepath: '@file'
       }))
     .pipe(rev())//(?:href|src)="(.*)[\?]rev=(.*)[\"]   //版本号
-    //.pipe(htmlmin(options))
+    .pipe(htmlmin(options))
     .pipe(dest('app'))
     .pipe(connect.reload());
     cb();
@@ -51,7 +52,17 @@ task('html_min', function (cb) {
 
 task('image_min', function (cb) {
     src('src/img/*')
-    //.pipe(imagemin())
+    // .pipe(imagemin([
+    //   imagemin.gifsicle({interlaced: true}),
+    //   imagemin.jpegtran({progressive: true}),
+    //   imagemin.optipng({optimizationLevel: 5}),
+    //   imagemin.svgo({
+    //       plugins: [
+    //           {removeViewBox: true},
+    //           {cleanupIDs: false}
+    //       ]
+    //   })
+    // ]))
     .pipe(dest('app/img'));
     cb();
 });
@@ -85,6 +96,7 @@ task('build', series('clean', parallel('css_min','js_min','image_min','html_min'
       -----------------------------`);
       cb();
 }));
+
 
 task('server',series('build','watch',function(){
     connect.server({
