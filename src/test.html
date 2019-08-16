@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>include-demo</title>
-<script src="./js/template-web.js"></script>
+<script src="./js/template.js"></script>
 </head>
 <body>
 <div id="content"></div>
@@ -13,9 +13,26 @@
 </script>
 <script id="list" type="text/html">
 <ul>
-    {{each list value i}}
-        <li>索引 {{i + 1}} ：{{value}}</li>
-    {{/each}}
+
+  <% for(var i=0; i < list.length; i=i+2){%>
+    <%if(list[i]){%>
+      <li><%=list[i]%></li>
+    <% }%>
+    <%if(list[i+1]){%>
+      <li><%=list[i+1]%></li>
+    <% }%>
+  <% }%>
+
+  {{each list value i}}
+      {{if( i%2 == 0)}}
+        {{if( list[i+1] )}}
+          <li>索引 {{i + 1}} ：{{list[i+1]}}</li>
+        {{/if}}
+        {{if( list[i+2] )}}
+        <li>索引 {{i + 2}} ：{{list[i+2]}}</li>
+        {{/if}}
+      {{/if}}
+  {{/each}}
 </ul>
 </script>
 <script>

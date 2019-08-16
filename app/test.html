@@ -1,6 +1,12 @@
-<!DOCTYPE HTML><html><head><meta charset="UTF-8"><title>include-demo</title><script src="./js/template-web.js"></script></head><body><div id="content"></div><script id="test" type="text/html"><h1>{{title}}</h1>
-{{include 'list'}}</script><script id="list" type="text/html"><ul>
-    {{each list value i}}
-        <li>索引 {{i + 1}} ：{{value}}</li>
-    {{/each}}
+<!DOCTYPE HTML><html><head><meta charset="UTF-8"><title>include-demo</title><script src="./js/template.js"></script></head><body><div id="content"></div><script id="test" type="text/html"><h1>{{title}}</h1>
+{{include 'list'}}</script><script id="list" type="text/html"><ul> <% for(var i=0; i < list.length; i=i+2){%> <%if(list[i]){%> <li><%=list[i]%></li> <% }%> <%if(list[i+1]){%> <li><%=list[i+1]%></li> <% }%> <% }%> {{each list value i}}
+      {{if( i%2 == 0)}}
+        {{if( list[i+1] )}}
+          <li>索引 {{i + 1}} ：{{list[i+1]}}</li>
+        {{/if}}
+        {{if( list[i+2] )}}
+        <li>索引 {{i + 2}} ：{{list[i+2]}}</li>
+        {{/if}}
+      {{/if}}
+  {{/each}}
 </ul></script><script>var data={title:"嵌入子模板",list:["文艺","博客","摄影","电影","民谣","旅行","吉他"]},html=template("test",data);document.getElementById("content").innerHTML=html</script></body></html>

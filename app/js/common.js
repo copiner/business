@@ -1,1 +1,98 @@
-var PaymentCode={},Common={ProjectPath:"http://10.199.251.167/sstsvr",ProjectStaticPath:"http://10.199.251.167/sstsvr/",ProjectName:"/machine",SUC_CODE:"0000",current:function(){var e=new Date,t="",n=new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");return t+=e.getFullYear()+"年",e.getMonth()<9&&(t+="0"),t+=e.getMonth()+1+"月",e.getDate()<10&&(t+="0"),t+=e.getDate()+"日 ",e.getHours()<10&&(t+="0"),t+=e.getHours()+":",e.getMinutes()<10&&(t+="0"),t+=e.getMinutes()+":",e.getSeconds()<10&&(t+="0"),t+=e.getSeconds()+" ",t+=n[e.getDay()]},getCurDateAndTime:function(e){var t=setInterval(function(){$(".showCurTime").html(Common.current()),0==--e?PaymentCode.flag?(clearInterval(t),$.piupiu("支付超时！"),PaymentCode.closeOrder(),setTimeout(function(){window.location.href=Common.ProjectName+"/index.html?date="+(new Date).getTime()},3e3)):window.location.href=Common.ProjectName+"/index.html?date="+(new Date).getTime():$(".countdown").text(e+"秒")},1e3)},seGeReItem:function(e,t){if(t)sessionStorage.setItem(e,t);else{if(""!=t)return sessionStorage.getItem(e);sessionStorage.removeItem(e)}},getUrlSearch:function(e){var t=new RegExp("(^|&)"+e+"=([^&]*)(&|$)","i"),n=window.location.search.substr(1).match(t);return null!=n?unescape(n[2]):null},getMacInfo:function(){try{var e=new ActiveXObject("WbemScripting.SWbemLocator").ConnectServer(".").ExecQuery("Select * from Win32_NetworkAdapterConfiguration Where IPEnabled =True");return new Enumerator(e).item().MACAddress}catch(e){$.piupiu("获取MAC地址失败:"+e)}},getUuid:function(){for(var e=[],t="0123456789abcdef",n=0;n<22;n++)e[n]=t.substr(Math.floor(16*Math.random()),1);return e[14]="4",e[21]=t.substr(3&e[18]|8,1),e[3]=e[8]=e[13]=e[18]="",e.join("")},hideContent:function(e,t,n,o){var r="";r=e.substring(0,t);for(var a=0;a<n;a++)r+=o;return r+=e.substring(t+n)},init:function(){Common.getCurDateAndTime($(".countdown").attr("data-second")),$(".backBtn").on("click",function(){window.location.href=Common.ProjectName+"/index.html?date="+(new Date).getTime()})}};Common.init(),$.extend({commonAjax:function(o){var e=o.url;if(e){o.url=e+"?date="+(new Date).getTime();var t=$.extend({type:"POST",contentType:"application/json",dataType:"json",cache:!1},o);t.success=function(e,t,n){o.success(e)},t.error=function(e,t,n){o.error&&o.error()},$.ajax(t)}else $.piupiu("请求地址为空！")}});
+/**
+ * Created by wdaonngg on 2018/10/29.
+ * 公用js
+ */
+var PaymentCode = {};
+var Common = {
+    //服务器地址prod
+    ProjectPath : '',
+    ProjectName : '',
+
+    //test
+    // ProjectPath : '',
+    // ProjectName : '',
+
+    //dev
+    // ProjectPath : '/api',
+    // ProjectName : '',
+
+    SUC_CODE : '0000',
+
+    /**
+     * 获取url的参数值
+     * @parm key url的参数key值
+     * @date 2018/05/10
+     */
+    getUrlSearch : function (key) {
+      var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) return unescape(r[2]);
+      return null;
+    },
+
+
+    /**
+     * @author wds
+     * 获取18位uuid
+     * @date 2018/05/10
+     */
+    getUuid : function() {
+        var s = [];
+        var hexDigits = "0123456789abcdef";
+        for (var i = 0; i < 22; i++) {
+            s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+        }
+        s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+        s[21] = hexDigits.substr((s[18] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+        s[3] = s[8] = s[13] = s[18] = "";
+        var uuid = s.join("");
+        return uuid;
+    },
+
+    /**
+     * 根据开始位置、长度、替换符号，替换内容的部分字符串
+     * @param content 原始字符串
+     * @param start 需要替换的开始位置
+     * @param length 需要替换的长度
+     * @param newStr 替换符
+     * @returns {string} 替换后的字符串
+     */
+    hideContent :  function (content ,start,length,newStr) {
+        var result = '';
+        result = content.substring(0,start);
+        for(var i=0;i<length;i++){
+            result += newStr;
+        }
+        result += content.substring(start+length);
+        return result;
+    }
+
+}
+
+$.extend({
+    commonAjax: function (options){
+        var url = options.url;
+        if (!url) {
+            return;
+        }
+        options.url = url + '?date='+new Date().getTime();
+
+        var defaults = {
+            type: 'POST',
+            contentType:"application/json",
+            dataType: 'json',
+            cache: false
+        };
+        var settings = $.extend(defaults, options);
+        settings.success =  function (re, textStatus, xhr){
+            options.success(re);
+        };
+        settings.error = function (xhr, status, handler){
+            if(options.error) {
+                options.error();
+            }
+        };
+        $.ajax(settings);
+    }
+
+});
