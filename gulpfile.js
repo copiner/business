@@ -14,7 +14,9 @@ const connect = require('gulp-connect');
 const proxy = require('http-proxy-middleware');//反向代理
 
 const fileinclude = require('gulp-file-include');
-const rev = require('gulp-rev-append');
+const rev = require('gulp-rev');
+const revCollector = require('gulp-rev-collector');
+// const rev = require('gulp-rev-append');//(?:href|src)="(.*)[\?]rev=(.*)[\"]   //版本号
 const del = require('del');
 
 // NODE_ENV
@@ -33,7 +35,10 @@ task('css_min', function (cb) {
     .pipe(plumber())
     .pipe(sass().on('error', sass.logError))
     .pipe(cleanCSS())
+    .pipe(rev())
     .pipe(dest('app/css'))
+    .pipe(rev.manifest())
+    .pipe(dest('rev/css'))
     .pipe(connect.reload());
     cb();
 });
@@ -42,7 +47,10 @@ task('js_min', function (cb) {
     src('src/js/*.js')
     .pipe(plumber())
     .pipe(gulpif(condition, uglify()))
+    .pipe(rev())
     .pipe(dest('app/js'))
+    .pipe(rev.manifest())
+    .pipe(dest('rev/js'))
     .pipe(connect.reload());
     cb();
 });
@@ -54,14 +62,14 @@ task('html_min', function (cb) {
         minifyJS: true,//压缩页面JS
         minifyCSS: true//压缩页面CSS
     };
-    src('src/*.html')
+    src(['rev/**/*.json','src/index.html'])
     .pipe(plumber())
     .pipe(fileinclude({
         prefix: '@@',
         basepath: '@file'
       }))
-    .pipe(rev())//(?:href|src)="(.*)[\?]rev=(.*)[\"]   //版本号
-    .pipe(htmlmin(options))
+    .pipe(revCollector())
+    //.pipe(htmlmin(options))
     .pipe(dest('app'))
     .pipe(connect.reload());
     cb();
@@ -70,7 +78,7 @@ task('html_min', function (cb) {
 task('image_min', function (cb) {
     src('src/imgs/*')
     .pipe(plumber())
-    .pipe(gulpif(condition, imagemin()))
+    //.pipe(gulpif(condition, imagemin()))
     .pipe(dest('app/imgs'));
     cb();
 });
@@ -85,7 +93,7 @@ task('watch', function(cb){//监控
 
 
 task('clean', () => {
-  return del('./app').then(() => {
+  return del(['./app','./rev']).then(() => {
     console.log(`
         -----------------------------
           clean tasks are successful
@@ -97,7 +105,7 @@ task('clean', () => {
 
 
 //生成环境
-task('build', series('clean', parallel('lib','css_min','js_min','image_min','html_min'),function(cb){
+task('build', series('clean', parallel('lib','css_min','js_min','image_min'),'html_min',function(cb){
   console.log(`
       -----------------------------
         build tasks are successful
