@@ -68,7 +68,9 @@ task('html_min', function (cb) {
         prefix: '@@',
         basepath: '@file'
       }))
-    .pipe(revCollector())
+    .pipe(revCollector({
+      replaceReved:true
+    }))
     //.pipe(htmlmin(options))
     .pipe(dest('app'))
     .pipe(connect.reload());
@@ -93,7 +95,7 @@ task('watch', function(cb){//监控
 
 
 task('clean', () => {
-  return del(['./app','./rev']).then(() => {
+  return del(['./app']).then(() => {
     console.log(`
         -----------------------------
           clean tasks are successful

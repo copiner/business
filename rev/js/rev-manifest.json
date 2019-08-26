@@ -1,9 +1,9 @@
 {
-  "common.js": "common-2a9462cc90.js",
-  "index.js": "index-56e2b3e054.js",
-  "rem.js": "rem-d39487cf1a.js",
-  "tap.js": "tap-810918cfd4.js",
-  "template.js": "template-d85bfb4e62.js",
-  "zepto.js": "zepto-214f7e6a8e.js",
-  "zepto.min.js": "zepto-220d73ef86.min.js"
+  "common.js": "common-d35408796c.js",
+  "index.js": "index-18333c1873.js",
+  "rem.js": "rem-7de311adf0.js",
+  "tap.js": "tap-c2ae1980bf.js",
+  "template.js": "template-e3f944937f.js",
+  "zepto.js": "zepto-f720d82461.js",
+  "zepto.min.js": "zepto-d37f7aa3fd.min.js"
 }
