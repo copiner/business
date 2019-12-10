@@ -2,76 +2,130 @@
 
 @import "./util";
 
-$form-background: #F90;
-
-header {
-    height: px2rem(100);
-    line-height: px2rem(100);
-    text-align: center;
-    background-color: #f2f2f2;
+html,
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+img,
+span,
+p,
+blockquote,
+th,
+td {
+    margin: 0;
+    padding: 0;
 }
 
-footer {
-    height: px2rem(150);
-    line-height: px2rem(150);
-    text-align: center;
-    background-color: #f2f2f2;
+ul, li {
+    list-style: none;
 }
 
-form{
-  display: flex;
-  //align-items: center;
+a {
+    text-decoration: none;
+    outline: none;
+}
 
-  background: $form-background;
+img {
+    vertical-align: middle;
+    border: 0;
+}
 
-  input {
-    flex-grow: 1;
-    align-self: center;//flex-start flex-end center stretch
-  }
+input,button {
+    outline: none;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+html {
+    @include root-font-size();
+}
+
+body {
+    /* rem2px的使用方式，仅用于临时计算 */
+    border-width: rem2px(0.6);
+
+    font-size: px2rem(16);
+    font-family: "Microsoft YaHei";
 }
 
 
+/*content*/
 
-/*sass*/
-
-//父选择器的标识符&
-article a {
-  color: blue;
-  &:hover { color: red }
+/*轮播图*/
+.jd_banner{
+    width: 100%;
+    overflow: hidden;
+    position: relative;
 }
-
-article a { color: blue }
-article a:hover { color: red }
-
-//css
-.container h1, .container h2, .container h3 { margin-bottom: .8em }
-//scss
-.container {
-  h1, h2, h3 {margin-bottom: .8em}
+.jd_banner ul:first-child{
+    width: 1000%;
+    transform: translateX(-10%);
+    -webkit-transform: translateX(-10%);
 }
-
-$fancybox-width: 400px !default;
-.fancybox {
-  width: $fancybox-width;
+.jd_banner ul:first-child li{
+    width: 10%;
+    float: left;
 }
-
-
-@mixin rounded-corners {
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
+.jd_banner ul:first-child li a{
+    display: block;
+    width: 100%;
 }
-
-.notice {
-  background-color: green;
-  border: 2px solid #00aa00;
-  @include rounded-corners;
+.jd_banner ul:first-child li a img{
+    display: block;
+    width: 100%;
 }
-
-.notice {
-  background-color: green;
-  border: 2px solid #00aa00;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
+.jd_banner ul:last-child{
+    position: absolute;
+    width: 118px;
+    height: 6px;
+    left: 50%;
+    margin-left:-59px;
+    bottom: 6px;
+}
+.jd_banner ul:last-child li{
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    border: 1px solid #fff;
+    margin-left:10px;
+    float: left;
+}
+.jd_banner ul:last-child li:first-child{
+    margin-left:0;
+}
+.jd_banner ul:last-child li.now{
+    background: #fff;
 }

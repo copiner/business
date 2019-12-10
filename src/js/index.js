@@ -9,7 +9,7 @@ var Index = {
   },
 
   initEvent : function () {
-    Index.initPage()
+    
   },
 
   initPage : function(){

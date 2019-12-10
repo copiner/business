@@ -1,6 +1,29 @@
 ### REVIEW
 
 
+#### gulp插件编写
+
+首先要了解through2，through2的源码仅仅就100多行，本质上就是对于node原生的transform流进行的封装
+through2经常被用于处理node的stream
+
+
+#### TODO
+
+浏览器跨域
+
+深入理解http协议， 手动实现原生http请求
+
+
+### 模板引擎原生书写artTemplate ,编写模板引擎
+
+### 移动端H5网页如何处理缓存问题
+
+服务器配置静态文件缓存
+
+使用 Fiddler 或 Charles 等工具代理一下可以禁用缓存
+
+更新时，修改一下文件名
+
 #### jquery 插件编写
 
 ```javascript
@@ -52,11 +75,12 @@
 or
 
 ```javascript
-;(function($){
-    $.extend($.fn, {
+(function($){
+  $.extend($.fn, {
     myPlugin: function(option){
        //..
-    })
+    }
+  });
 })(Zepto);
 //调用如下
 //$("#box").myPlugin();
@@ -75,22 +99,3 @@ or
 //调用如下
 //$.md5();
 ```
-
-### gulp插件编写
-
-首先要了解through2，through2的源码仅仅就100多行，本质上就是对于node原生的transform流进行的封装
-through2经常被用于处理node的stream
-
-```javascript
-
-```
-
-### TODO
-
-浏览器跨域
-
-深入理解http协议， 手动编写原生http请求
-
-
-
-模板引擎原生书写artTemplate ,编写模板引擎

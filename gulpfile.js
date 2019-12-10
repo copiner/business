@@ -27,7 +27,7 @@ task('css_dev', function (cb) {
     src('src/scss/*.scss')
     .pipe(plumber())
     .pipe(sass().on('error', sass.logError))
-    .pipe(dest('app/css'))
+    .pipe(dest('dist/css'))
     .pipe(connect.reload());
     cb();
 });
@@ -39,7 +39,7 @@ task('html_dev', function (cb) {
         prefix: '@@',
         basepath: '@file'
       }))
-    .pipe(dest('app'))
+    .pipe(dest('dist'))
     .pipe(connect.reload());
     cb();
 });
@@ -47,7 +47,7 @@ task('html_dev', function (cb) {
 task('js_dev', function (cb) {
     src('src/js/*.js')
     .pipe(plumber())
-    .pipe(dest('app/js'))
+    .pipe(dest('dist/js'))
     .pipe(connect.reload());
     cb();
 });
@@ -58,7 +58,7 @@ task('css_pro', function (cb) {
     .pipe(sass().on('error', sass.logError))
     .pipe(cleanCSS())
     .pipe(rev())
-    .pipe(dest('app/css'))
+    .pipe(dest('dist/css'))
     .pipe(rev.manifest())
     .pipe(dest('rev/css'));
     cb();
@@ -69,7 +69,7 @@ task('js_pro', function (cb) {
     .pipe(plumber())
     .pipe(uglify())
     .pipe(rev())
-    .pipe(dest('app/js'))
+    .pipe(dest('dist/js'))
     .pipe(rev.manifest())
     .pipe(dest('rev/js'));
     cb();
@@ -92,33 +92,29 @@ task('html_pro', function (cb) {
       collectedManifest:'sec-mainfest.json',
       replaceReved:true
     }))
-    .pipe(htmlmin(options))
-    .pipe(revCollector({//需要两次  todo ？？？
-      collectedManifest:'sec-mainfest.json',
-      replaceReved:true
-    }))
-    .pipe(dest('app'))
+    // .pipe(htmlmin(options))
+    .pipe(dest('dist'))
     .pipe(connect.reload());
     cb();
 });
 
 task('lib', function (cb) {
   src('src/lib/*')
-  .pipe(dest('app/lib'));
+  .pipe(dest('dist/lib'));
   cb();
 })
 
 task('config', function (cb) {
   src('src/config/*')
-  .pipe(dest('app/config'));
+  .pipe(dest('dist/config'));
   cb();
 })
 
 task('image_min', function (cb) {
     src('src/imgs/*')
     .pipe(plumber())
-    .pipe(gulpif(condition, imagemin()))
-    .pipe(dest('app/imgs'));
+    // .pipe(gulpif(condition, imagemin()))
+    .pipe(dest('dist/imgs'));
     cb();
 });
 
@@ -161,7 +157,7 @@ task('watch', function(cb){//监控
 
 
 task('clean', () => {
-  return del('./app').then(() => {
+  return del('./dist').then(() => {
     console.log(`
         -----------------------------
           clean tasks are successful
@@ -184,7 +180,7 @@ task('build', series('clean', parallel('config','lib','css_pro','js_pro','image_
 //开发环境
 task('server',series('clean','watch',parallel('config','lib','css_dev','js_dev','image_min','html_dev'),function(){
     connect.server({
-        root: 'app',
+        root: 'dist',
         host:'192.168.1.77',
         port: 3000,
         livereload: true,
