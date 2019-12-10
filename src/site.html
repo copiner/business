@@ -1,0 +1,16 @@
+@@include('include/header.html')
+
+
+<script id="siteTpl" type="text/html">
+		{{each list item index}}
+			<div class="site-info site-bcolor1">
+	      <span class="site-flag flag-color1">已刷卡</span>
+	      <p class="site-name name-color1">{{item.orgName}}</p>
+	      <p class="site-date">刷卡日期：<span>{{item.swipeDate}}</span></p>
+	    </div>
+		{{/each}}
+</script>
+
+<script src="./js/site.js"></script>
+
+@@include('include/footer.html')
