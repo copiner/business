@@ -89,7 +89,7 @@ task('html_pro', function (cb) {
         basepath: '@file'
       }))
     .pipe(revCollector({
-      collectedManifest:'sec-mainfest.json',
+      collectedManifest:'test-mainfest.json',
       replaceReved:true
     }))
     // .pipe(htmlmin(options))

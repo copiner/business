@@ -1,18 +1,21 @@
+/*1. 自动轮播图且无缝   定时器，过渡*/
+/*2. 点要随着图片的轮播改变  根据索引切换*/
+/*3. 滑动效果  利用touch事件完成*/
+/*4. 滑动结束的时候    如果滑动的距离不超过屏幕的1/3  吸附回去   过渡*/
+/*5. 滑动结束的时候    如果滑动的距离超过屏幕的1/3  切换（上一张，下一张）根据滑动的方向，过渡*/
+
+
 var banner = function () {
-    /*1. 自动轮播图且无缝   定时器，过渡*/
-    /*2. 点要随着图片的轮播改变  根据索引切换*/
-    /*3. 滑动效果  利用touch事件完成*/
-    /*4. 滑动结束的时候    如果滑动的距离不超过屏幕的1/3  吸附回去   过渡*/
-    /*5. 滑动结束的时候    如果滑动的距离超过屏幕的1/3  切换（上一张，下一张）根据滑动的方向，过渡*/
 
     /*轮播图*/
-    var banner = document.querySelector('.jd_banner');
+    var banner = document.querySelector('.sec_banner');
     /*屏幕宽度*/
     var width = banner.offsetWidth;
+    console.log(width);
     /*图片容器*/
-    var imageBox = banner.querySelector('ul:first-child');
+    var imageBox = banner.querySelector('.j_swiper');
     /*点容器*/
-    var pointBox = banner.querySelector('ul:last-child');
+    var pointBox = banner.querySelector('.j_dots');
     /*所有的点*/
     var points = pointBox.querySelectorAll('li');
     console.log(points)
@@ -42,17 +45,15 @@ var banner = function () {
     /*需要等最后一张动画结束去判断 是否瞬间定位第一张*/
     //在每次过渡结束后会触发该函数
     imageBox.addEventListener('transitionend', function () {
-        /*自动滚动的无缝*/
-        if (index >= 7) {
+
+        if (index >= 7) {/*自动滚动的无缝*/
             index = 0;
             /*瞬间定位*/
             /*清过渡*/
             removeTransition();
             /*做位移*/
             setTranslateX(-index * width);
-        }
-        /*滑动的时候也需要无缝*/
-        else if (index <= 0) {
+        } else if (index <= 0) {  /*滑动的时候也需要无缝*/
             index = 7;
             /*瞬间定位*/
             /*清过渡*/
@@ -61,14 +62,14 @@ var banner = function () {
             setTranslateX(-index * width);
         }
         /*根据索引设置点*/
-        /*此时此刻  index  的取值范围  1-8（0,8--1,9）*/
-        /*点索引  index - 1 */
+        /*此时此刻  index  的取值范围  0-6*/
+        /*点索引  index */
         setPoint();
     });
 
     /*设置点的方法*/
     var setPoint = function () {
-        /*index 1-8*/
+        /*index*/
         /*清除样式*/
         for (var i = 0; i < points.length; i++) {
             var obj = points[i];
@@ -113,12 +114,9 @@ var banner = function () {
                 setTranslateX(-index * width);
             } else {
                 /*切换*/
-                /*右滑动 上一张*/
-                if (distanceX > 0) {
+                if (distanceX > 0) { /*右滑动 上一张*/
                     index--;
-                }
-                /*左滑动 下一张*/
-                else {
+                } else {    /*左滑动 下一张*/
                     index++;
                 }
                 /*根据index去动画的移动*/
