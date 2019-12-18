@@ -2,7 +2,7 @@
  * Created by wdaonngg on 2018/10/29.
  * 公用js
  */
-var PaymentCode = {};
+
 var Common = {
     //服务器地址prod
     ProjectPath : '',
