@@ -4,21 +4,36 @@
 /*4. 滑动结束的时候    如果滑动的距离不超过屏幕的1/3  吸附回去   过渡*/
 /*5. 滑动结束的时候    如果滑动的距离超过屏幕的1/3  切换（上一张，下一张）根据滑动的方向，过渡*/
 
-
-var banner = function () {
-
+var banner = function (len) {
     /*轮播图*/
-    var banner = document.querySelector('.sec_banner');
-    /*屏幕宽度*/
-    var width = banner.offsetWidth;
-    console.log(width);
+
     /*图片容器*/
+    var banner = document.querySelector('.sec_banner');
+    var width = banner.offsetWidth;//屏幕宽度
+
     var imageBox = banner.querySelector('.j_swiper');
+
+    var img = imageBox.querySelectorAll('img');
+    var inum = img.length;
+
+    imageBox.style.width = inum*width + 'px';
+
+    for(var i=0; i<inum; i++){
+      img[i].style.width = width+'px';
+    }
+
     /*点容器*/
     var pointBox = banner.querySelector('.j_dots');
+
+    //当一张图片时候，不再显示点
+    if(len == 1){
+      pointBox.remove();
+      return;
+    }
+
     /*所有的点*/
     var points = pointBox.querySelectorAll('li');
-    console.log(points)
+
     var addTransition = function () {
         imageBox.style.transition = 'all 0.2s';
         imageBox.style.webkitTransition = 'all 0.2s';
@@ -28,10 +43,10 @@ var banner = function () {
         imageBox.style.webkitTransition = 'none';
     }
     var setTranslateX = function (translateX) {
+      console.log(translateX)
         imageBox.style.transform = 'translateX(' + translateX + 'px)';
         imageBox.style.webkitTransform = 'translateX(' + translateX + 'px)';
     }
-
 
     /*程序的核心 index */
     var index = 0;
@@ -41,20 +56,21 @@ var banner = function () {
         addTransition();
         /*做位移*/
         setTranslateX(-index * width);
-    }, 1000);
+    }, 2000);
+
     /*需要等最后一张动画结束去判断 是否瞬间定位第一张*/
     //在每次过渡结束后会触发该函数
     imageBox.addEventListener('transitionend', function () {
 
-        if (index >= 7) {/*自动滚动的无缝*/
+        if (index > len-1) {/*自动滚动的无缝*/
             index = 0;
             /*瞬间定位*/
             /*清过渡*/
             removeTransition();
             /*做位移*/
             setTranslateX(-index * width);
-        } else if (index <= 0) {  /*滑动的时候也需要无缝*/
-            index = 7;
+        } else if (index < 0) {  /*滑动的时候也需要无缝*/
+            index = len-1;
             /*瞬间定位*/
             /*清过渡*/
             removeTransition();
@@ -136,8 +152,9 @@ var banner = function () {
             addTransition();
             /*做位移*/
             setTranslateX(-index * width);
-        }, 1000);
+        }, 2000);
     });
 
 }
-banner();
+
+banner(12);

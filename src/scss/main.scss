@@ -93,11 +93,11 @@ body {
 
     .imgs-swiper{
         // border: 1px solid red;
-        width: 1000%;
-        transform: translateX(-10%);
-        -webkit-transform: translateX(-10%);
+        // width: 1000%;
+        // transform: translateX(-10%);
+        // -webkit-transform: translateX(-10%);
         li{
-          width: 10%;
+          // width: 10%;
           float: left;
 
           img{
@@ -132,7 +132,6 @@ body {
 /*联想查询*/
 .search{
     border: 1px solid transparent;
-    width: 400px;
     height: 20px;
     margin: 0 auto;
 }
