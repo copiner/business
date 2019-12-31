@@ -21,6 +21,6 @@ $(window).scroll(throttle(function(){
   // console.log('windowHeight'+windowHeight);
   console.log(scrollHeight - scrollTop - windowHeight <= 100);
   if(scrollHeight - scrollTop - windowHeight <= 100){
-      Index.siteMore();//加载更多
+      //加载更多
 　　}
 },300));

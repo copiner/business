@@ -102,7 +102,7 @@ body {
 
           img{
             display: block;
-            width: 100%;
+            // width: 100%;
             height: px2rem(300);
           }
         }
@@ -264,3 +264,62 @@ header {
 
 
 /*----------------area------------------e---*/
+
+
+/*-------------scroll---s----------------------*/
+.scorll-con{
+  p{
+    height: 30px;
+    line-height: 30px;
+    background: #ddd;
+    opacity: 0.5;
+  }
+}
+
+/*--------------touch---------------*/
+
+@keyframes toright{
+  from {left:-86px;}
+  to {left:0px;}
+}
+
+@-webkit-keyframes toright {/*Safari and Chrome*/
+  from {left:-86px;}
+  to {left:0px;}
+}
+
+@keyframes toleft{
+  from {left:0;}
+  to {left:-86px;}
+}
+
+@-webkit-keyframes toleft {/*Safari and Chrome*/
+  from {left:0px;}
+  to {left:-86px;}
+}
+
+.touch-con{
+  width: 100%;
+  height: 200px;
+  background-color: #CCC;
+  position: relative;
+
+  ul{
+    //
+    // animation:mymove 5s infinite;
+    // -webkit-animation:mymove 5s infinite; /*Safari and Chrome*/
+
+    position:absolute;
+    top: 0;
+    left: -80px;
+    li{
+      width: 86px;
+      height: 49px;
+      line-height: 49px;
+
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+      background-color: #999;
+    }
+  }
+}
