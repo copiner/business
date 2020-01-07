@@ -26,7 +26,7 @@ var Touch = {
         //    event.preventDefault();
         // }
 
-        e.preventDefault()
+        e.preventDefault();//阻止默认事件
         //持续触发
         console.log("touchmove");
         //console.log(e.changeTouches);
