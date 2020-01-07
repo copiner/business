@@ -279,23 +279,23 @@ header {
 /*--------------touch---------------*/
 
 @keyframes toright{
-  from {left:-86px;}
+  from {left:-80px;}
   to {left:0px;}
 }
 
 @-webkit-keyframes toright {/*Safari and Chrome*/
-  from {left:-86px;}
+  from {left:-80px;}
   to {left:0px;}
 }
 
 @keyframes toleft{
   from {left:0;}
-  to {left:-86px;}
+  to {left:-80px;}
 }
 
 @-webkit-keyframes toleft {/*Safari and Chrome*/
   from {left:0px;}
-  to {left:-86px;}
+  to {left:-80px;}
 }
 
 .touch-con{

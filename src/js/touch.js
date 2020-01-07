@@ -14,8 +14,8 @@ var Touch = {
         starty=e.touches[0].pageY;
         //只触发一次
         console.log("touchstart");
-        console.log(e.touches);
-        console.log(e.targetTouches);
+        // console.log(e.touches);
+        // console.log(e.targetTouches);
         //console.log(e.changeTouches);
     })
     div.addEventListener('touchmove',function(e){
@@ -26,7 +26,7 @@ var Touch = {
         //    event.preventDefault();
         // }
 
-        //e.preventDefault()
+        e.preventDefault()
         //持续触发
         console.log("touchmove");
         //console.log(e.changeTouches);
@@ -46,7 +46,7 @@ var Touch = {
         var documentW = document.documentElement.clientWidth;
         var documentH = document.documentElement.clientHeight;
 
-        if (Math.abs(deltax)<0.3*documentW && Math.abs(deltay)<0.3*documentH) {  //如果移动的距离小于0.3*设备宽度，则判定为不是滑动，退出（可以避免用户只是普通的点击造成的BUG）
+        if (Math.abs(deltax)<0.2*documentW && Math.abs(deltay)<0.1*documentH) {  //如果移动的距离小于0.3*设备宽度，则判定为不是滑动，退出（可以避免用户只是普通的点击造成的BUG）
             return;
         }
 
@@ -54,13 +54,14 @@ var Touch = {
 
         if (Math.abs(deltax) >= Math.abs(deltay)) {  //如果为true，则说明这个滑动是在X轴方向
             if(deltax>0){ //为true则为向右滑动
-              console.log(deltax);
+              console.log('right: '+deltax);
               ul.style.animation = "toright 0.5s linear 0s forwards";
               // if(ul.style.-webkit-animation){
               //   ul.style.-webkit-animation = "toright 1s";
               // }
               //ul.style.left = 0;
             }else{  //向左滑动
+              console.log('left: '+deltax);
               //ul.style.left = '-86px';
               ul.style.animation = "toleft 0.5s linear 0s forwards";
               // if(ul.style.-webkit-animation){
@@ -70,9 +71,9 @@ var Touch = {
             }
         }else{
             if(deltay>0){//为true则向下滑动
-
+              console.log('down: '+deltay);
             }else{  //向上滑动
-
+              console.log('up: '+deltay);
             }
         }
     });
