@@ -11,9 +11,6 @@ box.addEventListener('click', function(e) {
 }, false);
 content.addEventListener('click', function(e) {
   console.log('content');
-  // e.stopPropagation();//阻止事件冒泡
-  // e.preventDefault();//阻止默认事件
-  return false;
 }, false);
 
 var abc = document.querySelector('.j_abc');
