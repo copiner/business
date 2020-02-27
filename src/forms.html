@@ -1,0 +1,20 @@
+@@include('include/header.html')
+<!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+<script>eruda.init();</script> -->
+<form class="j_form_test" action="">
+	<label>性别：</label>
+	<input type="radio" name="sex" value='male'/><label>男</label>
+	<input name="sex" type="radio" value="female"/><label>女</label>
+	<br>
+	<label>科目：</label>
+	<input name='subject' type="checkbox" value="Chinese" /><label>语文</label>
+	<input name='subject' type="checkbox" checked value="Math" /><label>数学</label>
+	<input name='subject' type="checkbox" checked="checked" value="English"/><label>英语</label>
+	<input name='subject' type="checkbox" value="Sport"/><label>体育</label>
+	<input type="submit"/>
+  <input type="reset" />
+  <input type="button" value="确定" class="j_forms" />
+</form>
+
+<script src="./js/forms.js"></script>
+@@include('include/footer.html')

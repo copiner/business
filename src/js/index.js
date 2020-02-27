@@ -43,7 +43,7 @@ var banner = function (len) {
         imageBox.style.webkitTransition = 'none';
     }
     var setTranslateX = function (translateX) {
-      console.log(translateX)
+      //console.log(translateX)
         imageBox.style.transform = 'translateX(' + translateX + 'px)';
         imageBox.style.webkitTransform = 'translateX(' + translateX + 'px)';
     }
