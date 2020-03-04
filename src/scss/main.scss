@@ -266,15 +266,6 @@ header {
 /*----------------area------------------e---*/
 
 
-/*-------------scroll---s----------------------*/
-.scorll-con{
-  p{
-    height: 30px;
-    line-height: 30px;
-    background: #ddd;
-    opacity: 0.5;
-  }
-}
 
 /*--------------touch---------------*/
 
@@ -321,5 +312,16 @@ header {
       border-bottom: 1px solid #ccc;
       background-color: #999;
     }
+  }
+}
+
+
+/*-------------scroll---s----------------------*/
+.scorll-con{
+  p{
+    height: 30px;
+    line-height: 30px;
+    background: #ddd;
+    opacity: 0.8;
   }
 }

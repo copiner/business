@@ -1,18 +1,55 @@
-//函数防抖
-function debounce(fn, wait) {
+var dInput = document.querySelector('.j_input');
+
+//dInput.addEventListener('input',debounce(handle,500))
+
+dInput.addEventListener('input',(e) => {
+    //console.log(e);
+    var timeout = null;
+    if(timeout !== null)   clearTimeout(timeout);
+    timeout = setTimeout(function(){
+      console.log(e);
+    }, 500);
+})
+
+function bounce(fn, wait) {
     var timeout = null;
     return function() {
         if(timeout !== null)   clearTimeout(timeout);
         timeout = setTimeout(fn, wait);
     }
 }
-// 处理函数
-function handle() {
-    console.log(Math.random());
-}
-// 滚动事件
-window.addEventListener('scroll', debounce(handle, 1000));
 
+//TODO
+function handle(){
+  console.log(this.value)
+}
+
+//函数防抖
+// function debounce(fn, wait) {
+//     var timeout = null;
+//     return function() {
+//         if(timeout !== null)   clearTimeout(timeout);
+//         timeout = setTimeout(fn, wait);
+//     }
+// }
+// // 处理函数
+// function handle() {
+//     console.log(Math.random());
+// }
+// 滚动事件
+//window.addEventListener('scroll', debounce(handle, 1000));
+
+function debounce(fn, delay) {
+  var timer;
+  return function () {
+    var context = this
+    var args = arguments
+    clearTimeout(timer)
+    timer = setTimeout(function () {
+      fn.apply(context, args)
+    }, delay)
+  }
+}
 
 //函数节流
 //节流throttle代码（时间戳）
@@ -31,7 +68,7 @@ var throttle = function(func, delay) {
 function handle1() {
 　　console.log(Math.random());
 }
-window.addEventListener('scroll', throttle(handle1, 1000));
+//window.addEventListener('scroll', throttle(handle1, 1000));
 
 
 // 节流throttle代码
@@ -53,7 +90,7 @@ var throttle = function(func, delay) {
 function handle2() {
     console.log(Math.random());
 }
-window.addEventListener('scroll', throttle(handle2, 1000));
+//window.addEventListener('scroll', throttle(handle2, 1000));
 
 //节流throttle代码（时间戳+定时器）
 var throttle = function(func, delay) {
@@ -76,4 +113,4 @@ var throttle = function(func, delay) {
 function handle3() {
     console.log(Math.random());
 }
-window.addEventListener('scroll', throttle(handle3, 1000));
+//window.addEventListener('scroll', throttle(handle3, 1000));

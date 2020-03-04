@@ -23,6 +23,26 @@ function getScrollHeight(){
     return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
 }
 
+function debounce1(fn, wait) {
+    var timeout = null;
+    return function() {
+        if(timeout !== null)   clearTimeout(timeout);
+        timeout = setTimeout(fn, wait);
+    }
+}
+
+var debounce = function(fn, delay) {
+  var timer;
+  return function () {
+    var context = this
+    var args = arguments
+    clearTimeout(timer)
+    timer = setTimeout(function () {
+      fn.apply(context, args)
+    }, delay)
+  }
+}
+
 var throttle = function(func, delay) {
     var timer = null;
     return function() {
@@ -35,20 +55,6 @@ var throttle = function(func, delay) {
             }, delay);
         }
     }
-}
-
-
-window.οnscrοll = function(){
-    // 窗口可视范围的高度
-    var height=getClientHeight(),
-        // 窗口滚动条高度
-        theight=getScrollTop(),
-        // 窗口可视范围的高度
-        rheight=getScrollHeight(),
-        // 滚动条距离底部的高度
-        bheight=rheight-theight-height;
-        console.log(bheight);
-    document.getElementById('show').innerHTML='此时浏览器可见区域高度为：'+height+'<br />此时文档内容实际高度为：'+rheight+'<br />此时滚动条距离顶部的高度为：'+theight+'<br />此时滚动条距离底部的高度为：'+bheight;
 }
 
 /*
@@ -65,3 +71,58 @@ $(window).scroll(throttle(function(){
 　　}
 },300));
 */
+
+//解决多个window.onscroll覆盖的问题
+// $(document).ready(function(){
+//     //$(window).scroll(function(){console.log(0)});
+//     // $(window).scroll(function(){console.log(1)});
+// })
+
+
+
+/*
+绑定在window上的，如果html的高度没有超过整个浏览器高度，
+比如设置的是框架大小100%，那么是不会触发滚动的
+
+同样如果绑定在body上，body的高度需要比框架大才行。如果body的高度和框架一样大，
+而body内的元素比如一个叫container的div比body高，
+那么滚动是在这个container里滚的，绑定在body上的scroll便不会触发。这时候需要绑定在container上
+*/
+
+let tbox = document.querySelector('.j_scrolltest');
+
+tbox.onscroll = function () {
+    console.log('j_scrolltest');
+}
+
+
+// document.addEventListener('scroll',function(){
+//     console.log('first method');
+// });
+// window.addEventListener('scroll', function(){
+//     console.log('first method');
+// });
+
+
+// window.οnscrοll = function(){
+//   console.log("1111");
+// }
+
+
+window.addEventListener('scroll', function(){
+  console.log("scrolling");
+  // 窗口可视范围的高度
+  var height=getClientHeight(),
+      // 窗口滚动条高度
+      theight=getScrollTop(),
+      // 窗口可视范围的高度
+      rheight=getScrollHeight(),
+      // 滚动条距离底部的高度
+      bheight=rheight-theight-height;
+
+  document.getElementById('show').innerHTML=
+                  '此时浏览器可见区域高度为：'+height
+                  +'<br />此时文档内容实际高度为：'+rheight
+                  +'<br />此时滚动条距离顶部的高度为：'+theight
+                  +'<br />此时滚动条距离底部的高度为：'+bheight;
+});
