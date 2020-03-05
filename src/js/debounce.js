@@ -2,26 +2,42 @@ var dInput = document.querySelector('.j_input');
 
 //dInput.addEventListener('input',debounce(handle,500))
 
-dInput.addEventListener('input',(e) => {
-    //console.log(e);
-    var timeout = null;
-    if(timeout !== null)   clearTimeout(timeout);
-    timeout = setTimeout(function(){
-      console.log(e);
-    }, 500);
-})
+// dInput.addEventListener('input',(e) => {
+//     //console.log(e);
+//     var timeout = null;
+//     if(timeout !== null)   clearTimeout(timeout);
+//     timeout = setTimeout(function(){
+//       handle(e)
+//     }, 500);
+// })
 
-function bounce(fn, wait) {
+let ppt = 99;
+
+// dInput.addEventListener('input',(event) => {
+//   bounce(handle, 2000)(event);
+//   //(event)
+// })
+
+function bounce(fn, wait){
     var timeout = null;
-    return function() {
-        if(timeout !== null)   clearTimeout(timeout);
-        timeout = setTimeout(fn, wait);
+    return function(event) {
+      if(timeout !== null)   clearTimeout(timeout);
+      timeout = setTimeout(fn(event), wait);
+      // console.log(event);
     }
 }
 
+// setTimeout(()=>{
+//   handle()
+// }, 2000)
+// setTimeout(handle, 2000)
 //TODO
-function handle(){
-  console.log(this.value)
+function handle(e){
+  console.log(e)
+  // return function(){
+  //   console.log(e.target.value)
+  // }
+
 }
 
 //函数防抖
