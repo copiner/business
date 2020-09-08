@@ -55,6 +55,7 @@ var banner = function (len) {
         /*加过渡*/
         addTransition();
         /*做位移*/
+        console.log(-index * width)
         setTranslateX(-index * width);
     }, 2000);
 
