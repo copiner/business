@@ -63,7 +63,7 @@ function debounce(fn,delay){
         if(timer) clearTimeout(timer)
         timer = setTimeout(function () {
           fn.apply(context, args)
-        }, delay) // 简化写法
+        }, delay)
     }
 }
 
@@ -72,9 +72,8 @@ function debounce(fn,delay){
 　　后者只会阻止冒泡或者是捕获。 但是前者除此之外还会阻止该元素的其他事件发生，但是后者就不会阻止其他事件的发生
  **/
 
-
  function debounces(fn,delay){
-     let timer = null //借助闭包
+     var timer = null; //借助闭包
      return function() {
          if(timer) clearTimeout(timer)
          timer = setTimeout(fn,delay) // 简化写法

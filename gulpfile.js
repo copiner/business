@@ -16,7 +16,7 @@ const proxy = require('http-proxy-middleware');//反向代理
 const fileinclude = require('gulp-file-include');
 const rev = require('gulp-rev');
 const revCollector = require('gulp-rev-collector');
-// const rev = require('gulp-rev-append');//(?:href|src)="(.*)[\?]rev=(.*)[\"]   //版本号 该方法舍弃
+
 const del = require('del');
 
 // NODE_ENV
