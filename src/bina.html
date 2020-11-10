@@ -1,30 +1,14 @@
-/*
-通过ArrayBuffer的格式读取Ajax请求数据
-*/
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>binary</title>
+</head>
+<body>
+<script>
 
-//client
-const xhr = new XMLHttpRequest();
-xhr.open("GET", "ajax", true);
-xhr.responseType = "arraybuffer";
-xhr.onload = function () {
-    console.log(xhr.response)
-}
-xhr.send();
-
-
-//service
-
-const app = new Koa();
-app.use(async (ctx) => {
-  if (pathname = '/ajax') {
-    ctx.body = 'hello world';
-    ctx.status = 200;
-  }
-}).listen(3000)
-
-
-
-var str = "支持中文吗? ying gai shi zhi chi de.";
+var str = "xjx";
 console.log('编码前:'+ str);
 
 var total2str = "";
@@ -49,3 +33,8 @@ for(var i=0; i < arr.length; i++){
 }
 
 console.log('解码后:'+ goal );
+
+</script>
+
+</body>
+</html>

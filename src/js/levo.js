@@ -56,7 +56,7 @@ window.onload = function(){
 
 
 function debounce(fn,delay){
-    let timer = null //借助闭包
+    var timer = null //借助闭包
     return function() {
         var context = this
         var args = arguments

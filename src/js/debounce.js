@@ -11,7 +11,7 @@ var dInput = document.querySelector('.j_input');
 //     }, 500);
 // })
 
-let ppt = 99;
+var ppt = 99;
 
 // dInput.addEventListener('input',(event) => {
 //   bounce(handle, 2000)(event);

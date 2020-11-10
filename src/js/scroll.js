@@ -89,7 +89,7 @@ $(window).scroll(throttle(function(){
 那么滚动是在这个container里滚的，绑定在body上的scroll便不会触发。这时候需要绑定在container上
 */
 
-let tbox = document.querySelector('.j_scrolltest');
+var tbox = document.querySelector('.j_scrolltest');
 
 tbox.onscroll = function () {
     console.log('j_scrolltest');
